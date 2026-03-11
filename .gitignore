@@ -1,0 +1,166 @@
+# ============================================================================
+# .gitignore — PECDA en todos lados al final del tiempo
+# Godot 4.6 · macOS / Linux · Blender · Ableton · Affinity Photo
+# ============================================================================
+
+
+# ---------------------------------------------------------------------------
+# Godot 4.6 — Engine cache & imports
+# ---------------------------------------------------------------------------
+# Godot re-generates this entire folder from your source assets every time
+# you open the project. It contains converted textures, imported meshes, etc.
+# Tracking it would bloat your repo with binary diffs that change constantly.
+.godot/
+.import/
+.export/
+mono/
+*.tmp
+
+# Export templates generate these when you do a build.
+# They're large binaries that anyone can re-export from the project.
+*.translation
+
+# Console log dumps Godot may leave behind.
+logs/
+
+
+# ---------------------------------------------------------------------------
+# Builds / Exports
+# ---------------------------------------------------------------------------
+# If you export inside the project tree, keep builds out of version control.
+# Adjust the folder name if yours differs.
+export/
+builds/
+*.pck
+*.exe
+*.x86_64
+*.x86_32
+*.apk
+*.aab
+
+
+# ---------------------------------------------------------------------------
+# macOS
+# ---------------------------------------------------------------------------
+# .DS_Store = invisible Finder metadata. Every folder gets one. Pure noise.
+.DS_Store
+.DS_Store?
+
+# macOS resource forks and Spotlight metadata.
+._*
+.Spotlight-V100
+.Trashes
+
+# Thumbnail caches.
+Icon?
+
+
+# ---------------------------------------------------------------------------
+# Windows (just in case you ever collaborate cross-platform)
+# ---------------------------------------------------------------------------
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+
+# ---------------------------------------------------------------------------
+# Linux
+# ---------------------------------------------------------------------------
+*~
+
+
+# ---------------------------------------------------------------------------
+# IDEs & Editors
+# ---------------------------------------------------------------------------
+# VS Code
+.vscode/
+
+# JetBrains (Rider, etc.)
+.idea/
+*.iml
+
+# Vim / Neovim
+*.swp
+*.swo
+Session.vim
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+
+# ---------------------------------------------------------------------------
+# Blender — 3D Pipeline temporals
+# ---------------------------------------------------------------------------
+# Blender auto-save and crash recovery files.
+# Your actual .blend sources ARE tracked (they're your 3D originals).
+*.blend1
+*.blend2
+
+# Blender sometimes leaves thumbnails.
+.blender_thumbnails/
+
+
+# ---------------------------------------------------------------------------
+# Ableton Live — DAW session cruft
+# ---------------------------------------------------------------------------
+# Ableton creates "Backup" folders and undo history inside each project.
+# Your .als files and exported audio (.ogg) are what matter.
+Backup/
+*.asd
+
+
+# ---------------------------------------------------------------------------
+# Affinity Photo
+# ---------------------------------------------------------------------------
+# Temp / auto-save files. Your .afphoto originals are tracked.
+*.afphoto~
+*.tmp
+
+
+# ---------------------------------------------------------------------------
+# Audio — raw recordings you probably don't want in Git
+# ---------------------------------------------------------------------------
+# Uncompressed originals are massive. Keep them on an external backup.
+# Your final .ogg files inside res://assets/audio/ ARE tracked.
+*.mp3
+*.wav
+*.aiff
+*.aif
+*.flac
+
+# If you ever bounce lossless masters:
+*.pcm
+
+
+# ---------------------------------------------------------------------------
+# Images — raw / lossless source files
+# ---------------------------------------------------------------------------
+# PSD, TIFF, and RAW files are huge. Back them up separately.
+# Your final .png and .webp inside res://assets/ ARE tracked.
+*.psd
+*.tif
+*.tiff
+*.raw
+*.cr2
+*.nef
+*.dng
+
+
+# ---------------------------------------------------------------------------
+# General heavy / temp files
+# ---------------------------------------------------------------------------
+# Zip archives and disk images (you might download asset packs here).
+*.zip
+*.rar
+*.7z
+*.dmg
+*.iso
+
+# OS-generated thumbnails and caches.
+*.cache
+__pycache__/
+*.pyc
+
+# Git-cliff (changelog tool) doesn't need temp files tracked.
+# Your cliff.toml IS tracked.

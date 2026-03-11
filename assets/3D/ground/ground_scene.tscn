@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://vq5nbo6787il"]
+
+[ext_resource type="PackedScene" uid="uid://begjyr2sje4in" path="res://assets/3D/ground.glb" id="1_m83x8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_m83x8"]
+size = Vector3(20.316925, 1, 19.577576)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_m83x8"]
+load_path = "res://.godot/imported/ground_Grass001_2K-JPG_Color.webp-1bb43cd5cf2459cf3f182311cc5370fe.s3tc.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gtkgf"]
+load_path = "res://.godot/imported/ground_Grass001_2K-JPG_Roughness.webp-7b83dc6e6dda24b7f5f578c7b51d1efc.s3tc.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_clnio"]
+load_path = "res://.godot/imported/ground_Grass001_2K-JPG_NormalGL.webp-02d90147533492feede78939891c5c10.s3tc.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_isgor"]
+load_path = "res://.godot/imported/ground_Grass001_2K-JPG_Roughness.webp-7b83dc6e6dda24b7f5f578c7b51d1efc.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_61ba7"]
+resource_name = "ground"
+cull_mode = 2
+albedo_texture = SubResource("CompressedTexture2D_m83x8")
+metallic_specular = 0.0
+metallic_texture = SubResource("CompressedTexture2D_gtkgf")
+metallic_texture_channel = 2
+roughness_texture = SubResource("CompressedTexture2D_isgor")
+roughness_texture_channel = 1
+normal_enabled = true
+normal_texture = SubResource("CompressedTexture2D_clnio")
+subsurf_scatter_transmittance_depth = 0.5
+uv1_scale = Vector3(10, 10, 3.334)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_cyhc3"]
+_surfaces = [{
+"aabb": AABB(-1, 0, -1, 2, 1e-05, 2),
+"format": 34896613377,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 0, 0, 3, 0, 1, 0),
+"name": "ground",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_xffmk"]
+resource_name = "ground_Plane"
+_surfaces = [{
+"aabb": AABB(-1, 0, -1, 2, 1e-05, 2),
+"attribute_data": PackedByteArray(6, 0, 248, 255, 248, 255, 6, 0, 248, 255, 248, 255, 6, 0, 6, 0),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 0, 0, 3, 0, 1, 0),
+"material": SubResource("StandardMaterial3D_61ba7"),
+"name": "ground",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 0, 0, 255, 191, 255, 255, 0, 0, 255, 255, 255, 191, 0, 0, 0, 0, 0, 0, 255, 191, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 254, 255, 255, 127)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_cyhc3")
+
+[node name="ground" unique_id=35561292 instance=ExtResource("1_m83x8")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="0" unique_id=1779174385]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0" unique_id=1881821310]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08320618, 0, 1.1983948)
+shape = SubResource("BoxShape3D_m83x8")
+
+[node name="Plane" parent="." index="1" unique_id=809990897]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -0.066325426, 0.1568439, 0.9443271)
+mesh = SubResource("ArrayMesh_xffmk")

@@ -1,0 +1,6 @@
+[gd_resource type="Theme" format=3 uid="uid://cwloachj7sefo"]
+
+[ext_resource type="FontFile" uid="uid://c6cdsln4e3xs4" path="res://assets/fonts/cormorant_garamond/CormorantGaramond-Regular.ttf" id="1_3trtd"]
+
+[resource]
+default_font = ExtResource("1_3trtd")

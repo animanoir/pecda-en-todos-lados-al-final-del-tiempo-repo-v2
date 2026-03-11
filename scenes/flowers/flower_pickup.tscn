@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://4k1pj8ndx0jw"]
+
+[ext_resource type="Script" uid="uid://c6uulv6axn6cw" path="res://scenes/flowers/flower_pickup.gd" id="1_uw2ah"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ds068"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ds068"]
+
+[node name="FlowerPickup" type="StaticBody3D" unique_id=1888565628]
+script = ExtResource("1_uw2ah")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1565961345]
+shape = SubResource("BoxShape3D_ds068")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=913267146]
+mesh = SubResource("BoxMesh_ds068")
+
+[node name="SuccessSound" type="AudioStreamPlayer" parent="." unique_id=523527101]

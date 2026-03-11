@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://br01chminlckq"]
+
+[ext_resource type="Script" uid="uid://blbc1dedkudw" path="res://scenes/player/player.gd" id="1_01rsk"]
+[ext_resource type="Theme" uid="uid://cwloachj7sefo" path="res://assets/fonts/game_theme.tres" id="2_imbqx"]
+[ext_resource type="Script" uid="uid://cxd58ypa8crk8" path="res://scenes/player/interaction_manager.gd" id="2_jj3f1"]
+[ext_resource type="PackedScene" uid="uid://cio7nnv3k4f1l" path="res://scenes/ui/qtedisplay/qte_display.tscn" id="2_nuvst"]
+[ext_resource type="Script" uid="uid://dntimmyvhuucd" path="res://scenes/player/input_manager.gd" id="5_p47bc"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_01rsk"]
+radius = 0.3
+height = 1.75
+
+[sub_resource type="LabelSettings" id="LabelSettings_01rsk"]
+font_size = 24
+
+[node name="Player" type="CharacterBody3D" unique_id=684826114]
+script = ExtResource("1_01rsk")
+rotation_smoothness = 0.3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=628655214]
+shape = SubResource("CapsuleShape3D_01rsk")
+
+[node name="CameraHead" type="Node3D" parent="." unique_id=1838382892]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraHead" unique_id=187227311]
+current = true
+fov = 50.0
+far = 50.0
+
+[node name="InteractionRay" type="RayCast3D" parent="CameraHead/Camera3D" unique_id=863873969]
+target_position = Vector3(0, 0, -3)
+
+[node name="CrosshairUI" type="CanvasLayer" parent="." unique_id=2025504051]
+
+[node name="Crosshair" type="CenterContainer" parent="CrosshairUI" unique_id=299891151]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_imbqx")
+
+[node name="CrosshairLabel" type="Label" parent="CrosshairUI/Crosshair" unique_id=2098189001]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "."
+label_settings = SubResource("LabelSettings_01rsk")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QTEDisplay" parent="CrosshairUI" unique_id=1981457136 instance=ExtResource("2_nuvst")]
+
+[node name="InteractionManager" type="Node" parent="." unique_id=294182580]
+script = ExtResource("2_jj3f1")
+
+[node name="InputManager" type="Node" parent="." unique_id=1894158493]
+script = ExtResource("5_p47bc")
