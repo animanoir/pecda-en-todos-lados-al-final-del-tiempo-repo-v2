@@ -195,14 +195,14 @@ res://
 │   ├── garden/
 │   │   ├── garden.tscn              # Main scene (project root scene)
 │   │   ├── garden.gd               # Garden scene script
-│   │   ├── garden_world.gd         # Garden world logic
-│   │   ├── flower.gd               # Flower node script
+│   │   ├── garden_world.gd         # Garden world logic (empty stub)
+│   │   ├── flower.gd               # Flower node script (empty stub)
 │   │   ├── grassfield.gd           # GrassField — MultiMesh procedural grass (@tool)
 │   │   └── objects/                 # (empty — placeholder for dissolving objects)
 │   │
 │   ├── flowers/
-│   │   ├── flower_pickup.tscn       # FlowerPickup scene (StaticBody3D)
-│   │   └── flower_pickup.gd        # Interactable flower with collect + disappear
+│   │   ├── flower_pickup.tscn       # FlowerPickup scene (StaticBody3D + FlowerModel container)
+│   │   └── flower_pickup.gd        # Interactable flower with 3D model spawning + collect + disappear
 │   │
 │   └── ui/
 │       ├── tutorial_panel.gd       # Legacy tutorial panel (superseded by tutorial_display)
@@ -248,15 +248,24 @@ res://
 │   │   │   └── flower_success/      # Random success sounds on collection
 │   │   └── music/                   # Degraded music
 │   ├── textures/
-│   │   ├── flowers/                 # Watercolor illustrations (2048×2048 PNG w/ alpha)
+│   │   ├── flowers/                 # Watercolor illustrations (not yet added)
 │   │   └── grass_wind_noise.tres   # Wind noise texture for grass shader
+│   ├── images/
+│   │   ├── grass.png               # Grass blade texture
+│   │   └── grass2-512.png          # Alternate grass texture
+│   ├── sky/
+│   │   └── dikhololo_night_2k.exr  # 2K panoramic sky environment map
 │   ├── fonts/
 │   │   └── game_theme.tres         # Theme with CormorantGaramond font
 │   └── 3D/
-│       └── ground/
-│           └── ground_scene.tscn   # Terrain mesh scene
+│       ├── ground/
+│       │   └── ground_scene.tscn   # Terrain mesh scene
+│       └── flowers/                 # 3D flower models (.glb + textures)
+│           └── violeta/
+│               ├── flor_15_violeta.glb                              # Violeta 3D model
+│               └── flor_15_violeta_pansyflower3dmodel_basecolor.jpg # Base color texture
 │
-├── EXPERIMENTS/                     # Experimental scripts and scenes
+├── experiments/                     # Experimental scripts and scenes
 │   ├── EXP_SCRIPTS/
 │   │   ├── bouquet_generator.gd    # BouquetGenerator prototype (Node2D)
 │   │   ├── autoloads_tests.gd      # Manual testing for clock (SPACE/P keys)
@@ -396,6 +405,9 @@ group, shows a crosshair prompt ("E"), and triggers the QTE sequence via `QTEDis
 During a QTE, if the player looks away from the target, the QTE is cancelled.
 
 Flowers use `FlowerPickup` (extends `StaticBody3D`, in `"interactables"` group).
+Each FlowerPickup has three `@export` vars: `flower_name: String`, `flower_id: int`,
+and `flower_model_scene: PackedScene`. On `_ready()`, the script spawns the 3D flower
+model by instantiating `flower_model_scene` into a `FlowerModel` Node3D container.
 On successful QTE, calls `target.interact()` which plays a random success SFX
 (from `assets/audio/sfx/flower_success/`, routed to `"SFX"` audio bus), then
 shrinks to zero and `queue_free()`. The SFX player is reparented to the scene
@@ -549,19 +561,33 @@ ambient lines while the player walks. Phase-specific intervals:
 
 ### BouquetGenerator — The Final Gift (experimental)
 
-Prototype exists in `EXPERIMENTS/EXP_SCRIPTS/bouquet_generator.gd` (extends `Node2D`).
+Prototype exists in `experiments/EXP_SCRIPTS/bouquet_generator.gd` (extends `Node2D`).
 Planned to use SubViewport to programmatically compose collected watercolor flowers
 into a personalized PNG bouquet image. Flowers placed in predefined slots across depth
 layers with slight rotation (±15°) for natural composition.
 
 ---
 
-## Flower Illustrations — Technical Specifications
+## Flower Assets — Technical Specifications
+
+### 2D Watercolor Illustrations (for bouquet)
 
 15 watercolor botanical illustrations with ink outlines. Commissioned artwork.
+**Status:** Not yet added to the repository. Will go in `assets/textures/flowers/`.
 
 **Format:** PNG with alpha channel, letter-size resolution, sRGB, 8 bits per channel.
 **Naming:** `flor_[ID]_[nombre].png` (e.g., `flor_01_girasol.png`)
+
+### 3D Flower Models (for garden)
+
+3D models used by `FlowerPickup` nodes in the garden scene. Each flower has a `.glb`
+model file and associated textures stored in `assets/3D/flowers/<flower_name>/`.
+**Naming:** `flor_[ID]_[nombre].glb` (e.g., `flor_15_violeta.glb`)
+
+**Currently added:**
+- Violeta (#15): `assets/3D/flowers/violeta/flor_15_violeta.glb`
+
+**Not yet added:** Flowers #01–#14 (3D models pending).
 
 **Composition zones within each illustration:**
 - Central zone (60-70%): Flower with petals, leaves, partial stem
@@ -588,7 +614,7 @@ layers with slight rotation (±15°) for natural composition.
 | 12 | Orquídea       | M    | White with purple veins| Bilateral symmetry, prominent lip  |
 | 13 | Cempasúchil    | M    | Intense orange/amber  | Dense curled pompom, Mexican cultural|
 | 14 | Lavanda        | M    | Bluish violet         | Tall vertical spike, tiny flowers   |
-| 15 | Violeta        | M    | Deep violet           | Small asymmetric petals             |
+| 15 | Violeta        | M    | Deep violet           | Small asymmetric petals (3D model added) |
 
 **Bouquet composition (programmatic):**
 1. Each flower is an independent layer on a digital canvas
@@ -756,6 +782,8 @@ for albedo, Linear for roughness/metallic/normal).
   from `GameStates.player_speed_multiplier`. The legacy `player_controller.gd` still
   exists but is not used.
 - Flowers are `StaticBody3D` nodes in the `"interactables"` group (`FlowerPickup`).
+  Each one dynamically spawns a 3D model from its `flower_model_scene` export.
+  3D models are stored in `assets/3D/flowers/<flower_name>/` as `.glb` files.
 - Interaction uses `RayCast3D` from the camera head, managed by `InteractionManager`.
 - QTE is handled by `QTEDisplay` (Control node), triggered by `InteractionManager`.
 - Mouse look is captured (`Input.MOUSE_MODE_CAPTURED`) with vertical clamping ±90°.
