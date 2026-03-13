@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c15373kuy2mt2"
-path.s3tc="res://.godot/imported/violeta_v2_pansyflower3dmodel_basecolor.jpg-f0e7328e60fc147ae75f2efad5d11aa3.s3tc.ctex"
+uid="uid://7u087wgphfxa"
+path.s3tc="res://.godot/imported/flor_15_violeta_pansyflower3dmodel_basecolor.jpg-a288e59a70ba115d5a3c929bf3d26cbd.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -14,8 +14,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://assets/3D/flowers/violeta/violeta_v2_pansyflower3dmodel_basecolor.jpg"
-dest_files=["res://.godot/imported/violeta_v2_pansyflower3dmodel_basecolor.jpg-f0e7328e60fc147ae75f2efad5d11aa3.s3tc.ctex"]
+source_file="res://assets/3D/flowers/violeta/flor_15_violeta_pansyflower3dmodel_basecolor.jpg"
+dest_files=["res://.godot/imported/flor_15_violeta_pansyflower3dmodel_basecolor.jpg-a288e59a70ba115d5a3c929bf3d26cbd.s3tc.ctex"]
 
 [params]
 

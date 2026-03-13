@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://d00jokfa0uovi"
-path="res://.godot/imported/violeta_v2.glb-472ab56791952fa626397e004a822f54.scn"
+uid="uid://8jwpts5mo4tq"
+path="res://.godot/imported/flor_15_violeta.glb-590f137b47361d06d0585abeb1c521bf.scn"
 
 [deps]
 
-source_file="res://assets/3D/flowers/violeta/violeta_v2.glb"
-dest_files=["res://.godot/imported/violeta_v2.glb-472ab56791952fa626397e004a822f54.scn"]
+source_file="res://assets/3D/flowers/violeta/flor_15_violeta.glb"
+dest_files=["res://.godot/imported/flor_15_violeta.glb-590f137b47361d06d0585abeb1c521bf.scn"]
 
 [params]
 
@@ -28,7 +28,7 @@ meshes/light_baking=1
 meshes/lightmap_texel_size=0.2
 meshes/force_disable_compression=false
 skins/use_named_skins=true
-animation/import=false
+animation/import=true
 animation/fps=30
 animation/trimming=false
 animation/remove_immutable_tracks=true

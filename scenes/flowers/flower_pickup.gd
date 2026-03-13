@@ -11,8 +11,12 @@ extends StaticBody3D
 ## by reparenting to the scene root before queue_free.
 
 @export var flower_name: String = "Rosa"
+@export var flower_id:int = 7
+@export var flower_model_scene:PackedScene
 
 var _is_collected: bool = false
+
+@onready var _model_container:Node3D = $FlowerModel
 
 ## Preloaded success sounds. Loaded once, shared across instances.
 ## If you add more files, just add them to this array.
@@ -22,6 +26,7 @@ static var _sounds_loaded: bool = false
 
 func _ready() -> void:
 	add_to_group("interactables")
+	_spawn_flower_model()
 
 	# Load success sounds once (shared across all FlowerPickup instances).
 	if not _sounds_loaded:
@@ -35,7 +40,7 @@ func interact() -> void:
 
 	_is_collected = true
 	print("Collected flower: ", flower_name)
-
+	GameEventBus.flower_collected.emit(flower_id, flower_name)
 	# Play a random success sound.
 	_play_random_success_sound()
 
@@ -97,3 +102,11 @@ static func _load_success_sounds() -> void:
 	dir.list_dir_end()
 
 	print("[FlowerPickup] Loaded %d success sounds." % _success_sounds.size())
+
+func _spawn_flower_model() -> void:
+	if not flower_model_scene:
+		push_warning("[Flower Pickup] No model assigned to: %s" % flower_name)
+		return
+	
+	var model_instance:Node3D = flower_model_scene.instantiate()
+	_model_container.add_child(model_instance)
