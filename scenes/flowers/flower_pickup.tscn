@@ -4,15 +4,12 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ds068"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_ds068"]
-
 [node name="FlowerPickup" type="StaticBody3D" unique_id=1888565628]
 script = ExtResource("1_uw2ah")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1565961345]
 shape = SubResource("BoxShape3D_ds068")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=913267146]
-mesh = SubResource("BoxMesh_ds068")
+[node name="Node3D" type="Node3D" parent="." unique_id=983098573]
 
 [node name="SuccessSound" type="AudioStreamPlayer" parent="." unique_id=523527101]
