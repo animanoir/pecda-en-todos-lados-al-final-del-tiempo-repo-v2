@@ -14,12 +14,40 @@
 [ext_resource type="Texture2D" uid="uid://bnlborragoqqr" path="res://assets/textures/grass_wind_noise.tres" id="6_xy4m2"]
 [ext_resource type="Script" uid="uid://ctq1uycadrjaq" path="res://experiments/EXP_SCRIPTS/autoloads_tests.gd" id="8_c1w1u"]
 [ext_resource type="PackedScene" uid="uid://8jwpts5mo4tq" path="res://assets/3D/flowers/violeta/flor_15_violeta.glb" id="10_g5d4s"]
+[ext_resource type="Resource" uid="uid://bhb5v0gf5ynkl" path="res://resources/flowers/flower_data_violeta.tres" id="11_1l4p1"]
 [ext_resource type="Resource" uid="uid://isq1n7hc7wnl" path="res://resources/flowers/flower_data_amapola.tres" id="11_e6ay6"]
 [ext_resource type="Script" uid="uid://bfd6yp3yfy3xe" path="res://scripts/systems/game_phase_manager.gd" id="11_ksqo1"]
 [ext_resource type="Resource" uid="uid://mtl5b785ihlr" path="res://resources/flowers/flower_data_avedelparaiso.tres" id="12_blbrx"]
+[ext_resource type="PackedScene" uid="uid://cikm61gtdpugn" path="res://assets/3D/flowers/rosa/flor_07_rosa.glb" id="12_le0xf"]
+[ext_resource type="Resource" uid="uid://tr0w3wboq425" path="res://resources/flowers/flower_data_rosa.tres" id="13_hc81a"]
 [ext_resource type="Script" uid="uid://bne4hewwidwt8" path="res://scripts/systems/confusion_system.gd" id="13_yktlr"]
 [ext_resource type="Script" uid="uid://d23swsqwcp0es" path="res://scripts/systems/ambient_phase_system.gd" id="14_ojjr1"]
+[ext_resource type="PackedScene" uid="uid://bj5d1fvkii8la" path="res://assets/3D/flowers/amapola/flor_10_amapola.glb" id="14_s78jy"]
+[ext_resource type="PackedScene" uid="uid://bw30kdp6qngoi" path="res://assets/3D/flowers/avedelparaiso/flor_04_avedelparaiso.glb" id="15_oau17"]
+[ext_resource type="PackedScene" uid="uid://buokwwhvbhyra" path="res://assets/3D/flowers/cempasuchil/flor_13_cempasuchil.glb" id="16_at2dd"]
 [ext_resource type="Script" uid="uid://cm56u8wwecijj" path="res://scripts/systems/narration_system.gd" id="17_h2d2l"]
+[ext_resource type="PackedScene" uid="uid://w7wc7ycruhml" path="res://assets/3D/flowers/dalia/flor_02_dalia.glb" id="17_s1o1p"]
+[ext_resource type="PackedScene" uid="uid://ca58p7ehaywy7" path="res://assets/3D/flowers/girasol/flor_01_girasol.glb" id="18_s1o1p"]
+[ext_resource type="Resource" uid="uid://cufmyrby3ly0t" path="res://resources/flowers/flower_data_cempasuchil.tres" id="19_7prwf"]
+[ext_resource type="PackedScene" uid="uid://cgiyeda0bfxrj" path="res://assets/3D/flowers/hortensia/flor_03_hortensia.glb" id="19_ai0aa"]
+[ext_resource type="PackedScene" uid="uid://d0mxqfoodsnp0" path="res://assets/3D/flowers/jacinto/flor_12_jacinto.glb" id="20_17cta"]
+[ext_resource type="Script" uid="uid://b48i76egpuqex" path="res://scenes/ui/bouqet_screen.gd" id="21_blbrx"]
+[ext_resource type="PackedScene" uid="uid://832xqv2c5ovw" path="res://assets/3D/flowers/lavanda/flor_14_lavanda.glb" id="21_k47cs"]
+[ext_resource type="Resource" uid="uid://b8v4quses14gg" path="res://resources/flowers/flower_data_dalia.tres" id="21_ksn1a"]
+[ext_resource type="PackedScene" uid="uid://dgoj5l7yio2w1" path="res://assets/3D/flowers/magnolia/flor_06_magnolia.glb" id="22_njhb3"]
+[ext_resource type="PackedScene" uid="uid://k6eb182483hh" path="res://assets/3D/flowers/orquidea/flor_12_orquidea.glb" id="23_2pum1"]
+[ext_resource type="Resource" uid="uid://bwcy7cmvhc5hx" path="res://resources/flowers/flower_data_girasol.tres" id="23_ifglt"]
+[ext_resource type="PackedScene" uid="uid://r4rmvvkwgfyj" path="res://assets/3D/flowers/peonia/flor_05_peonia.glb" id="24_llbb6"]
+[ext_resource type="Resource" uid="uid://xcpo0gfeehc5" path="res://resources/flowers/flower_data_hortensia.tres" id="25_7e4ym"]
+[ext_resource type="PackedScene" uid="uid://b4xh3ly2nsctt" path="res://assets/3D/flowers/tulipan/flor_09_tulipan.glb" id="25_jnmw5"]
+[ext_resource type="Resource" uid="uid://dwyw24lgp06cl" path="res://resources/flowers/flower_data_jacinto.tres" id="27_74020"]
+[ext_resource type="Resource" uid="uid://dfwi5rd6xhqkd" path="res://resources/flowers/flower_data_lavanda.tres" id="29_nlbv1"]
+[ext_resource type="PackedScene" uid="uid://bn0siswsf8qm2" path="res://assets/3D/flowers/lirio/flor_08_lirio.glb" id="30_hc81a"]
+[ext_resource type="Resource" uid="uid://dpn5srnbvpvlr" path="res://resources/flowers/flower_data_lirio.tres" id="30_nnjin"]
+[ext_resource type="Resource" uid="uid://bw4btlay5ln3d" path="res://resources/flowers/flower_data_magnolia.tres" id="32_vnb1g"]
+[ext_resource type="Resource" uid="uid://ch6g7jh861tri" path="res://resources/flowers/flower_data_orquidea.tres" id="34_kcr6t"]
+[ext_resource type="Resource" uid="uid://bi8yepturnymh" path="res://resources/flowers/flower_data_peonia.tres" id="36_gwhxi"]
+[ext_resource type="Resource" uid="uid://orbueh25s0wp" path="res://resources/flowers/flower_data_tulipan.tres" id="38_g0ryp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tbojc"]
 shader = ExtResource("2_5njx1")
@@ -149,19 +177,109 @@ transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0.031142473, -0.14902997, 0
 [node name="CharacterBody3D" parent="." unique_id=684826114 instance=ExtResource("3_ehujy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2803724, 0)
 
-[node name="FlowerPickup" parent="." unique_id=1888565628 instance=ExtResource("4_ehujy")]
+[node name="FlorVioleta" parent="." unique_id=1888565628 instance=ExtResource("4_ehujy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.18432, -6.9430523)
 flower_name = "violeta"
 flower_id = 15
 flower_model_scene = ExtResource("10_g5d4s")
+flower_data = ExtResource("11_1l4p1")
+
+[node name="FlorRosa" parent="." unique_id=911906104 instance=ExtResource("4_ehujy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.360717, 1.18432, -6.9430523)
+flower_id = 5
+flower_model_scene = ExtResource("12_le0xf")
+flower_data = ExtResource("13_hc81a")
+
+[node name="FlorAmapola" parent="." unique_id=2249867 instance=ExtResource("4_ehujy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5721729, 1.18432, -6.9430523)
+flower_name = "Amapola"
+flower_id = 10
+flower_model_scene = ExtResource("14_s78jy")
 flower_data = ExtResource("11_e6ay6")
 
-[node name="FlowerPickup3" parent="." unique_id=911906104 instance=ExtResource("4_ehujy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.360717, 1.18432, -6.9430523)
+[node name="FlorAvedelparaiso" parent="." unique_id=817993253 instance=ExtResource("4_ehujy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.4993863, 1.18432, -3.9036753)
+flower_name = "Avedelparaiso"
+flower_id = 4
+flower_model_scene = ExtResource("15_oau17")
 flower_data = ExtResource("12_blbrx")
 
-[node name="FlowerPickup2" parent="." unique_id=2249867 instance=ExtResource("4_ehujy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.4993863, 1.18432, -6.9430523)
+[node name="FlorCempasuchil" parent="." unique_id=1091755745 instance=ExtResource("4_ehujy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.3495824, 1.18432, -6.9430523)
+flower_name = "Cempasuchil"
+flower_id = 13
+flower_model_scene = ExtResource("16_at2dd")
+flower_data = ExtResource("19_7prwf")
+
+[node name="FlorDalia" parent="." unique_id=1715724068 instance=ExtResource("4_ehujy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.4993863, 1.18432, -9.742875)
+flower_name = "Dalia"
+flower_id = 2
+flower_model_scene = ExtResource("17_s1o1p")
+flower_data = ExtResource("21_ksn1a")
+
+[node name="FlorGirasol" parent="." unique_id=821462995 instance=ExtResource("4_ehujy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.778248, 1.18432, -6.9430523)
+flower_name = "Girasol"
+flower_id = 1
+flower_model_scene = ExtResource("18_s1o1p")
+flower_data = ExtResource("23_ifglt")
+
+[node name="FlorHortensia" parent="." unique_id=609785098 instance=ExtResource("4_ehujy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.4993863, 1.18432, -8.166692)
+flower_name = "Hortensia"
+flower_id = 3
+flower_model_scene = ExtResource("19_ai0aa")
+flower_data = ExtResource("25_7e4ym")
+
+[node name="FlorJacinto" parent="." unique_id=1115015262 instance=ExtResource("4_ehujy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.81603765, 1.18432, -6.9430523)
+flower_name = "Jacinto"
+flower_id = 12
+flower_model_scene = ExtResource("20_17cta")
+flower_data = ExtResource("27_74020")
+
+[node name="FlorLavanda" parent="." unique_id=934550547 instance=ExtResource("4_ehujy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1492772, 1.18432, -14.856983)
+flower_name = "Lavanda"
+flower_id = 14
+flower_model_scene = ExtResource("21_k47cs")
+flower_data = ExtResource("29_nlbv1")
+
+[node name="FlorLirio" parent="." unique_id=1129578849 instance=ExtResource("4_ehujy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.044428, 1.18432, -5.223583)
+flower_name = "Lavanda"
+flower_id = 8
+flower_model_scene = ExtResource("30_hc81a")
+flower_data = ExtResource("30_nnjin")
+
+[node name="FlorMagnolia" parent="." unique_id=572319755 instance=ExtResource("4_ehujy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.383799, 1.18432, -10.540731)
+flower_name = "Magnolia"
+flower_id = 6
+flower_model_scene = ExtResource("22_njhb3")
+flower_data = ExtResource("32_vnb1g")
+
+[node name="FlorOrquidea" parent="." unique_id=607679201 instance=ExtResource("4_ehujy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8451476, 1.18432, -12.714439)
+flower_name = "Orquidea"
+flower_id = 12
+flower_model_scene = ExtResource("23_2pum1")
+flower_data = ExtResource("34_kcr6t")
+
+[node name="FlorPeonia" parent="." unique_id=1427950188 instance=ExtResource("4_ehujy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.7144527, 1.18432, -5.400868)
+flower_name = "Peonia"
+flower_id = 5
+flower_model_scene = ExtResource("24_llbb6")
+flower_data = ExtResource("36_gwhxi")
+
+[node name="FlorTulipan" parent="." unique_id=1811859260 instance=ExtResource("4_ehujy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4152577, 1.18432, -22.197653)
+flower_name = "Tulipan"
+flower_id = 9
+flower_model_scene = ExtResource("25_jnmw5")
+flower_data = ExtResource("38_g0ryp")
 
 [node name="Grassfield" type="MultiMeshInstance3D" parent="." unique_id=1316005414 node_paths=PackedStringArray("player_node")]
 visible = false
@@ -191,3 +309,39 @@ script = ExtResource("17_h2d2l")
 narration_player = NodePath("NarrationPlayer")
 
 [node name="NarrationPlayer" type="AudioStreamPlayer" parent="NarrationSystem" unique_id=1769454917]
+
+[node name="BouquetScreen" type="CanvasLayer" parent="." unique_id=266431373 node_paths=PackedStringArray("background", "bouquet_container", "phrase_label")]
+script = ExtResource("21_blbrx")
+background = NodePath("Background")
+bouquet_container = NodePath("Background/MarginContainer/VBoxContainer/BouquetContainer")
+phrase_label = NodePath("Background/MarginContainer/VBoxContainer/PhraseLabel")
+
+[node name="Background" type="ColorRect" parent="BouquetScreen" unique_id=1679829827]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="BouquetScreen/Background" unique_id=1769797146]
+layout_mode = 0
+offset_right = 1155.0
+offset_bottom = 645.0
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BouquetScreen/Background/MarginContainer" unique_id=454182275]
+layout_mode = 2
+
+[node name="BouquetContainer" type="Control" parent="BouquetScreen/Background/MarginContainer/VBoxContainer" unique_id=247128631]
+layout_mode = 2
+
+[node name="PhraseLabel" type="Label" parent="BouquetScreen/Background/MarginContainer/VBoxContainer" unique_id=823367114]
+layout_mode = 2
+
+[node name="helpers" type="Node" parent="." unique_id=1809713061]
+
+[node name="helpLight" type="DirectionalLight3D" parent="helpers" unique_id=1442762528]
+transform = Transform3D(1, 0, 0, 0, -0.011379278, 0.99993527, 0, -0.99993527, -0.011379278, 0, 7.7095118, 0)

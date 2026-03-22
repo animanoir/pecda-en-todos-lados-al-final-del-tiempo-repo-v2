@@ -20,7 +20,7 @@ extends Node
 
 ## Total duration in seconds of active exploration.
 ## Only ticks when the player is free to move.
-const GAME_DURATION: float = 100.0 # 900.0 seconds = 15 minutes
+const GAME_DURATION: float = 20.0 # 900.0 seconds = 15 minutes
 
 ## Phase thresholds — "alarms" that fire when crossed.
 ## Each entry maps a deterioration value to a phase name.
