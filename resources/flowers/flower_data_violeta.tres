@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FlowerData" format=3 uid="uid://bhb5v0gf5ynkl"]
+
+[ext_resource type="Texture2D" uid="uid://dhqmnomgcklkq" path="res://assets/images/flowers/amapola.png" id="1_01f8f"]
+[ext_resource type="Script" uid="uid://bolio54pvwbxu" path="res://resources/flowers/bouquet_generator/flower_data.gd" id="1_a73eg"]
+
+[resource]
+script = ExtResource("1_a73eg")
+flower_name = "amapola"
+flower_id = 10
+illustration = ExtResource("1_01f8f")
+metadata/_custom_type_script = "uid://bolio54pvwbxu"

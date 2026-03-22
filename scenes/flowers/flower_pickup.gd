@@ -13,6 +13,7 @@ extends StaticBody3D
 @export var flower_name: String = "Rosa"
 @export var flower_id:int = 7
 @export var flower_model_scene:PackedScene
+@export var flower_data:FlowerData = null
 
 var _is_collected: bool = false
 
@@ -43,6 +44,14 @@ func interact() -> void:
 	GameEventBus.flower_collected.emit(flower_id, flower_name)
 	# Play a random success sound.
 	_play_random_success_sound()
+	
+	# Register the flower in GameStates
+	if flower_data:
+		GameStates.add_flower(flower_data)
+	else:
+		# Fallback for testing without FlowerData assigned.
+		var placeholder := Resource.new()
+		GameStates.add_flower(placeholder)
 
 	# Simple visual feedback: shrink and disappear.
 	var tween: Tween = create_tween()

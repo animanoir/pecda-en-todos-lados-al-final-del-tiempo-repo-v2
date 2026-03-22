@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="FlowerData" format=3 uid="uid://mtl5b785ihlr"]
+
+[ext_resource type="Script" uid="uid://bolio54pvwbxu" path="res://resources/flowers/bouquet_generator/flower_data.gd" id="1_7fbgb"]
+[ext_resource type="Texture2D" uid="uid://ccgdk8b06251l" path="res://assets/images/flowers/avedelparaiso.png" id="1_mxcjy"]
+
+[resource]
+script = ExtResource("1_7fbgb")
+flower_name = "avedelparaiso"
+flower_id = 4
+illustration = ExtResource("1_mxcjy")
+size_category = "Large"
+metadata/_custom_type_script = "uid://bolio54pvwbxu"

@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="FlowerData" format=3 uid="uid://b8v4quses14gg"]
+
+[ext_resource type="Script" uid="uid://bolio54pvwbxu" path="res://resources/flowers/bouquet_generator/flower_data.gd" id="1_2pqr0"]
+
+[resource]
+script = ExtResource("1_2pqr0")
+metadata/_custom_type_script = "uid://bolio54pvwbxu"
