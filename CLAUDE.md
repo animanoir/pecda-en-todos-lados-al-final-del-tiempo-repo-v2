@@ -168,7 +168,7 @@ None of the autoload scripts declare a `class_name` — they use `extends Node` 
 | Service Locator    | Autoloads            | Global access to EventBus, GameStates, DeteriorationClock  | Implemented |
 | State Machine      | PhaseManager         | Clean phase transitions with clear rules                   | Implemented |
 | Event Queue        | NarrationSystem      | Queues narrations, only one plays at a time                | Implemented |
-| Flyweight          | FlowerData           | Shared data per flower type (texture, name, narration)     | Planned     |
+| Flyweight          | FlowerData           | Shared data per flower type (texture, name, narration)     | Implemented |
 | Phase Presets      | AmbientPhaseSystem   | Per-phase visual atmosphere with tweened transitions        | Implemented |
 | Tier Escalation    | PostProcessSystem    | Deterioration-tier ghost bursts with increasing severity    | Implemented |
 
@@ -224,7 +224,25 @@ res://
 │       └── flower_system.gd         # QTE logic + collection (stub)
 │
 ├── resources/
-│   └── grass_multimesh.tres         # MultiMesh resource for grass
+│   ├── grass_multimesh.tres         # MultiMesh resource for grass
+│   └── flowers/                     # FlowerData resources (Flyweight pattern)
+│       ├── bouquet_generator/
+│       │   └── flower_data.gd       # FlowerData Resource class (class_name FlowerData)
+│       ├── flower_data_girasol.tres  # One .tres per flower (15 total)
+│       ├── flower_data_dalia.tres
+│       ├── flower_data_hortensia.tres
+│       ├── flower_data_avedelparaiso.tres
+│       ├── flower_data_peonia.tres
+│       ├── flower_data_magnolia.tres
+│       ├── flower_data_rosa.tres
+│       ├── flower_data_lirio.tres
+│       ├── flower_data_tulipan.tres
+│       ├── flower_data_amapola.tres
+│       ├── flower_data_jacinto.tres
+│       ├── flower_data_orquidea.tres
+│       ├── flower_data_cempasuchil.tres
+│       ├── flower_data_lavanda.tres
+│       └── flower_data_violeta.tres
 │
 ├── shaders/
 │   ├── grass/
@@ -248,22 +266,37 @@ res://
 │   │   │   └── flower_success/      # Random success sounds on collection
 │   │   └── music/                   # Degraded music
 │   ├── textures/
-│   │   ├── flowers/                 # Watercolor illustrations (not yet added)
 │   │   └── grass_wind_noise.tres   # Wind noise texture for grass shader
 │   ├── images/
 │   │   ├── grass.png               # Grass blade texture
-│   │   └── grass2-512.png          # Alternate grass texture
+│   │   ├── grass2-512.png          # Alternate grass texture
+│   │   └── flowers/                 # 2D watercolor illustrations for bouquet
+│   │       ├── amapola.png          # Flower #10 (2 of 15 added so far)
+│   │       └── avedelparaiso.png    # Flower #04
 │   ├── sky/
 │   │   └── dikhololo_night_2k.exr  # 2K panoramic sky environment map
 │   ├── fonts/
-│   │   └── game_theme.tres         # Theme with CormorantGaramond font
+│   │   ├── game_theme.tres         # Theme with CormorantGaramond font
+│   │   └── cormorant_garamond/     # TTF font files (Regular, SemiBold, Italic)
 │   └── 3D/
 │       ├── ground/
 │       │   └── ground_scene.tscn   # Terrain mesh scene
-│       └── flowers/                 # 3D flower models (.glb + textures)
+│       └── flowers/                 # 3D flower models (.glb + textures) — ALL 15 present
+│           ├── girasol/             # Each folder: flor_[ID]_[name].glb + basecolor .jpg
+│           ├── dalia/
+│           ├── hortensia/
+│           ├── avedelparaiso/
+│           ├── peonia/
+│           ├── magnolia/
+│           ├── rosa/
+│           ├── lirio/
+│           ├── tulipan/
+│           ├── amapola/
+│           ├── jacinto/
+│           ├── orquidea/            # Also has normal + roughness/metallic maps
+│           ├── cempasuchil/
+│           ├── lavanda/
 │           └── violeta/
-│               ├── flor_15_violeta.glb                              # Violeta 3D model
-│               └── flor_15_violeta_pansyflower3dmodel_basecolor.jpg # Base color texture
 │
 ├── experiments/                     # Experimental scripts and scenes
 │   ├── EXP_SCRIPTS/
@@ -281,7 +314,6 @@ res://
 
 **Not yet created (planned):**
 - `systems/bouquet_generator.gd` — Programmatic bouquet image generator
-- `resources/flowers/flower_data.gd` — Flyweight Resource per flower type
 - `resources/narration/narration_script.gd` — Narration script data
 - `shaders/dissolve.gdshader` — Object dissolution
 
@@ -559,6 +591,23 @@ ambient lines while the player walks. Phase-specific intervals:
 `involuntary_pause_started`, `flower_collected`, `flower_missed`,
 `player_pressed_wrong_key`. Emits `narration_started` and `narration_finished`.
 
+### FlowerData — Shared Flower Resource (implemented)
+
+Flyweight Resource defined in `resources/flowers/bouquet_generator/flower_data.gd`.
+Declares `class_name FlowerData`. Each of the 15 flower types has one `.tres` instance
+in `resources/flowers/` (e.g., `flower_data_girasol.tres`).
+
+**Exported properties:**
+- `flower_name: String` — display name in Spanish (e.g., "Girasol")
+- `flower_id: int` — unique ID (1–15)
+- `illustration: Texture2D` — 2D watercolor PNG for the bouquet (null if not yet added)
+- `size_category: String` — "Large" or "Medium" (enum export)
+- `dominant_color: Color` — fallback tint when illustration is unavailable
+
+Every `FlowerPickup` in the garden references a `FlowerData`. When collected, the
+resource is stored in `GameStates.collected_flowers`. The `BouquetGenerator` will
+read these resources to compose the final bouquet image.
+
 ### BouquetGenerator — The Final Gift (experimental)
 
 Prototype exists in `experiments/EXP_SCRIPTS/bouquet_generator.gd` (extends `Node2D`).
@@ -573,10 +622,11 @@ layers with slight rotation (±15°) for natural composition.
 ### 2D Watercolor Illustrations (for bouquet)
 
 15 watercolor botanical illustrations with ink outlines. Commissioned artwork.
-**Status:** Not yet added to the repository. Will go in `assets/textures/flowers/`.
+**Status:** 2 of 15 added. Stored in `assets/images/flowers/`.
+Currently available: `amapola.png` (#10), `avedelparaiso.png` (#04).
 
 **Format:** PNG with alpha channel, letter-size resolution, sRGB, 8 bits per channel.
-**Naming:** `flor_[ID]_[nombre].png` (e.g., `flor_01_girasol.png`)
+**Naming:** `[nombre].png` (e.g., `amapola.png`, `avedelparaiso.png`)
 
 ### 3D Flower Models (for garden)
 
@@ -584,10 +634,12 @@ layers with slight rotation (±15°) for natural composition.
 model file and associated textures stored in `assets/3D/flowers/<flower_name>/`.
 **Naming:** `flor_[ID]_[nombre].glb` (e.g., `flor_15_violeta.glb`)
 
-**Currently added:**
-- Violeta (#15): `assets/3D/flowers/violeta/flor_15_violeta.glb`
+**Status:** All 15 flowers have 3D models. Each folder contains a `.glb` and a
+`_basecolor.jpg` texture. Orquidea (#12) additionally has normal and roughness/metallic
+maps.
 
-**Not yet added:** Flowers #01–#14 (3D models pending).
+**Note:** Jacinto and Orquidea both use `flor_12_` prefix in their filenames (jacinto
+should be `flor_11_` per the design table — naming discrepancy in assets).
 
 **Composition zones within each illustration:**
 - Central zone (60-70%): Flower with petals, leaves, partial stem
@@ -614,7 +666,7 @@ model file and associated textures stored in `assets/3D/flowers/<flower_name>/`.
 | 12 | Orquídea       | M    | White with purple veins| Bilateral symmetry, prominent lip  |
 | 13 | Cempasúchil    | M    | Intense orange/amber  | Dense curled pompom, Mexican cultural|
 | 14 | Lavanda        | M    | Bluish violet         | Tall vertical spike, tiny flowers   |
-| 15 | Violeta        | M    | Deep violet           | Small asymmetric petals (3D model added) |
+| 15 | Violeta        | M    | Deep violet           | Small asymmetric petals                 |
 
 **Bouquet composition (programmatic):**
 1. Each flower is an independent layer on a digital canvas
