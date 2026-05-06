@@ -22,6 +22,11 @@ GameEventBus="*uid://ckrdvtwmsbepr"
 GameStates="*uid://d20ct5hrlqcn8"
 GameDeteriorationClock="*uid://bhldcxbwdxchr"
 
+[debug]
+
+shapes/navigation/3d/geometry_edge_color=Color(1, 0.05490196, 0, 1)
+shapes/navigation/3d/geometry_face_color=Color(0.5019608, 1, 1, 1)
+
 [input]
 
 interact={

@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://c8tyf7j3a6fqf"]
+
+[ext_resource type="Script" uid="uid://cbsqk466huogb" path="res://scenes/garden/magic_dot_swarm.gd" id="1_h0bip"]
+[ext_resource type="PackedScene" uid="uid://cwo33dsj5rf03" path="res://scenes/garden/magic_dot.tscn" id="2_c2ws7"]
+
+[node name="MagicDotSwarm" type="Node3D" unique_id=2129632055]
+script = ExtResource("1_h0bip")
+dot_scene = ExtResource("2_c2ws7")
+dot_count = 20

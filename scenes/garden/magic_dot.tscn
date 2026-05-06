@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cwo33dsj5rf03"]
+
+[ext_resource type="Script" uid="uid://pedln0x0bpy2" path="res://scenes/garden/magic_dot.gd" id="1_x5aw1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8mygm"]
+metallic_specular = 0.0
+emission_enabled = true
+emission = Color(0.76862746, 0.6039216, 0.54901963, 1)
+emission_energy_multiplier = 5.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_x5aw1"]
+material = SubResource("StandardMaterial3D_8mygm")
+
+[node name="MagicDot" type="Node3D" unique_id=1441815246]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
+script = ExtResource("1_x5aw1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=47815171]
+mesh = SubResource("SphereMesh_x5aw1")
