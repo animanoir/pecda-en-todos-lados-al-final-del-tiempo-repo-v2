@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://c6g4us3ekyl6e"]
+
+[sub_resource type="Gradient" id="Gradient_l5e6e"]
+offsets = PackedFloat32Array(0, 0.8056818, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.84886366, 0.84886366, 0.84886366, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qei1p"]
+gradient = SubResource("Gradient_l5e6e")
+
+[sub_resource type="Curve" id="Curve_80xgc"]
+_data = [Vector2(0, 0), 0.0, -0.031248357, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.286099, 0.0, 0, 0]
+point_count = 3
+metadata/_snap_enabled = true
+
+[sub_resource type="CurveTexture" id="CurveTexture_y26t8"]
+curve = SubResource("Curve_80xgc")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_l5e6e"]
+lifetime_randomness = 0.5
+emission_shape_scale = Vector3(10, 10, 10)
+emission_shape = 1
+emission_sphere_radius = 1.0
+initial_velocity_max = 2.0
+angular_velocity_min = 29.999983
+angular_velocity_max = 59.99998
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_y26t8")
+color_ramp = SubResource("GradientTexture1D_qei1p")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6f2s8"]
+albedo_color = Color(18.892002, 7.37469, 11.824047, 1)
+metallic_specular = 0.0
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_qei1p"]
+material = SubResource("StandardMaterial3D_6f2s8")
+radius = 0.01
+height = 0.02
+radial_segments = 32
+
+[node name="MagicDotsParticles" type="Node3D" unique_id=930777605]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=348813756]
+amount = 10
+lifetime = 2.5999999999999996
+preprocess = 0.65
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_l5e6e")
+draw_pass_1 = SubResource("SphereMesh_qei1p")

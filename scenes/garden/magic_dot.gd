@@ -14,6 +14,10 @@ extends Node3D
 @export var vertical_wobble: float = 0.3
 @export var wobble_frequency: float = 3.0
 
+@export_group("Visual")
+@export var dot_color: Color = Color(1.0, 0.85, 0.7)
+@export var emission_strength: float = 8.0
+
 @export_group("Bounds")
 @export var bounds_radius: float = 3.0
 @export var return_strength: float = 1.5
@@ -41,11 +45,11 @@ func _ready() -> void:
 	
 	# Force the emissive material at runtime — bypasses any scene saving issues
 	var mat := StandardMaterial3D.new()
-	mat.albedo_color = Color.WHITE
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mat.albedo_color = dot_color
 	mat.emission_enabled = true
-	mat.emission = Color(1.0, 0.85, 0.7)
-	mat.emission_energy_multiplier = 20.0
-	
+	mat.emission = dot_color
+	mat.emission_energy_multiplier = emission_strength
 	_mesh.material_override = mat
 
 
