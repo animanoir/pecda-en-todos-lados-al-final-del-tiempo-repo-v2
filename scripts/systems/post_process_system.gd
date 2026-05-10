@@ -141,6 +141,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	return
 	if not _shader_material:
 		return
 

@@ -5,8 +5,17 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_vg3g3"]
 size = Vector3(0.9534912, 110.798355, 1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_8eagx"]
+size = Vector3(0.42178345, 1.9020996, 2.7021484)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d1wv3"]
+size = Vector3(1, 0.99154663, 2.5184326)
+
 [node name="night_v2" unique_id=11503724 instance=ExtResource("1_vg3g3")]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+
+[node name="Object_24" parent="Sketchfab_model/0211d1ec9bc440898a9b2628b6968ee7_fbx/RootNode/Stage1Whiterose/Stage1Whiterose_arm/Object_5/Skeleton3D" parent_id_path=PackedInt32Array(538956534) index="11" unique_id=1246087315]
+visible = false
 
 [node name="Wall" type="StaticBody3D" parent="." index="1" unique_id=801387250]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3646388, 16.760248, 2.6508708)
@@ -63,3 +72,31 @@ transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -17.
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Wall8" index="0" unique_id=1989011483]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0692749, 54.88112, -5.9604645e-07)
 shape = SubResource("BoxShape3D_vg3g3")
+
+[node name="DoorWall" type="StaticBody3D" parent="." index="9" unique_id=1872985133]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7002071, -121.24092, 5.299609e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DoorWall" index="0" unique_id=197395561]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.26190186, 0, 0)
+shape = SubResource("BoxShape3D_8eagx")
+
+[node name="DoorWall2" type="StaticBody3D" parent="." index="10" unique_id=2087019551]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -121.16814, 0.2588771, 1.38398)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DoorWall2" index="0" unique_id=128794921]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.87260437, -0.36193848, -0.44580078)
+shape = SubResource("BoxShape3D_8eagx")
+
+[node name="DoorWall3" type="StaticBody3D" parent="." index="11" unique_id=829635104]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 121.845856, -0.047746897, 2.0870832e-09)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DoorWall3" index="0" unique_id=1754790300]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14691165, 0.7592163)
+shape = SubResource("BoxShape3D_d1wv3")
+
+[node name="DoorWall4" type="StaticBody3D" parent="." index="12" unique_id=1500417825]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 121.149315, 0.36104363)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DoorWall4" index="0" unique_id=1404950674]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8751068, 0.75921625)
+shape = SubResource("BoxShape3D_d1wv3")

@@ -42,7 +42,7 @@ radial_segments = 32
 [node name="MagicDotsParticles" type="Node3D" unique_id=930777605]
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=348813756]
-amount = 10
+amount = 15
 lifetime = 2.5999999999999996
 preprocess = 0.65
 randomness = 1.0

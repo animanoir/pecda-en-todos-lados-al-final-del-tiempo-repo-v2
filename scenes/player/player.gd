@@ -22,10 +22,10 @@ extends CharacterBody3D
 @export var inertia_strength: float = 0.85
 
 @export_group("Camera Sway")
+# "Drunk" movement
 @export var sway_speed: float = 0.1
 @export var sway_rotation: float = 0.05
 @export var sway_position: float = 0.01
-
 
 # -- Private variables -------------------------------------------------------
 
@@ -49,14 +49,11 @@ var _rotation_velocity := Vector2.ZERO
 @onready var _camera_box: Node3D = $CameraHead
 @onready var _camera_box_base_pos: Vector3 = _camera_box.position
 
-
 # -- Virtual callbacks -------------------------------------------------------
 
 func _ready() -> void:
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	_noise.seed = randi()
 	_noise.frequency = 0.5
-
 
 func _process(delta: float) -> void:
 	# Block camera rotation and sway when the player can't move.
@@ -103,7 +100,7 @@ func _input(event: InputEvent) -> void:
 		_target_yaw += _rotation_velocity.x
 		_target_pitch += _rotation_velocity.y
 		_target_pitch = clamp(
-				_target_pitch, deg_to_rad(-20.0), deg_to_rad(75.0)
+				_target_pitch, deg_to_rad(-45.0), deg_to_rad(75.0)
 		)
 
 

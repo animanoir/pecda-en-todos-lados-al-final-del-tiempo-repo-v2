@@ -1,4 +1,4 @@
-@tool
+# @tool
 class_name GrassField
 extends MultiMeshInstance3D
 ## Generates a field of grass blades using MultiMesh and updates

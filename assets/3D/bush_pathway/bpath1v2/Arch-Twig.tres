@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://ds0osvbe6xvnj"]
+
+[ext_resource type="Texture2D" uid="uid://u5oxg4n4upm5" path="res://assets/3D/bush_pathway/bpath1v2/bpath1v2_bark_willow_diff_2k-Twig_12__Opacity.png" id="1_bvdl5"]
+
+[resource]
+resource_name = "Arch-Twig"
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+shading_mode = 2
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_bvdl5")
+roughness = 0.0

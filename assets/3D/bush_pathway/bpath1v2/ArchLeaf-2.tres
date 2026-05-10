@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bcxbdnx5wc60b"]
+
+[ext_resource type="Texture2D" uid="uid://dl8rcpsvf4lev" path="res://assets/3D/bush_pathway/bpath1v2/bpath1v2_Tikoma-Clusture_Diffuse.png" id="1_hdyic"]
+
+[resource]
+resource_name = "ArchLeaf-2"
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+shading_mode = 2
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_hdyic")
+roughness = 0.5
