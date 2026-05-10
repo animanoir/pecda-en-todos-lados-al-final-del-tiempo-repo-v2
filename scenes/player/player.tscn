@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://dntimmyvhuucd" path="res://scenes/player/input_manager.gd" id="5_p47bc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_01rsk"]
-radius = 0.3
+radius = 0.25
 height = 1.75
 
 [sub_resource type="LabelSettings" id="LabelSettings_01rsk"]
@@ -26,6 +26,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraHead" unique_id=187227311]
 current = true
+fov = 45.0
 far = 50.0
 
 [node name="InteractionRay" type="RayCast3D" parent="CameraHead/Camera3D" unique_id=863873969]

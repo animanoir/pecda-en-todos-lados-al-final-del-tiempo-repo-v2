@@ -179,6 +179,9 @@ None of the autoload scripts declare a `class_name` — they use `extends Node` 
 ```
 res://
 ├── project.godot
+├── addons/
+│   └── godot-neovim/                # Editor addon — Neovim integration (enabled in project.godot)
+│
 ├── autoloads/
 │   ├── game_event_bus.gd            # Global signals (Observer pattern)
 │   ├── game_states.gd              # Persistent session data
@@ -194,15 +197,28 @@ res://
 │   │
 │   ├── garden/
 │   │   ├── garden.tscn              # Main scene (project root scene)
-│   │   ├── garden.gd               # Garden scene script
+│   │   ├── garden.gd               # Garden scene script (mouse capture + ESC toggle in debug)
 │   │   ├── garden_world.gd         # Garden world logic (empty stub)
 │   │   ├── flower.gd               # Flower node script (empty stub)
-│   │   ├── grassfield.gd           # GrassField — MultiMesh procedural grass (@tool)
+│   │   ├── grassfield.gd           # GrassField — MultiMesh procedural grass (runtime only)
+│   │   ├── bush_corridor1.gd       # @tool MultiMeshInstance3D corridor of bushes
+│   │   ├── hedge_corridor.gd       # @tool HedgeCorridor — repeats a hedge segment along -Z
+│   │   ├── bush_pathway_merged.tscn # Bush pathway merged GLB instance
+│   │   ├── magic_dot.gd / .tscn    # MagicDot — wandering glowing dot (noise + wobble)
+│   │   ├── magic_dot_swarm.gd / .tscn # MagicDotSwarm — spawns N MagicDots in a sphere
+│   │   ├── magic_moon.gd           # Directional light with subtle two-axis oscillation
+│   │   ├── night_world_environment.gd # Rotates sky_rotation.y every frame
 │   │   └── objects/                 # (empty — placeholder for dissolving objects)
+│   │
+│   ├── environments/
+│   │   └── bush.tscn                # Bush scene wrapping the bush GLB
 │   │
 │   ├── flowers/
 │   │   ├── flower_pickup.tscn       # FlowerPickup scene (StaticBody3D + FlowerModel container)
 │   │   └── flower_pickup.gd        # Interactable flower with 3D model spawning + collect + disappear
+│   │
+│   ├── vfx/
+│   │   └── oam_gpu_magicdots.tscn  # GPUParticles3D-based magic-dots VFX (active)
 │   │
 │   └── ui/
 │       ├── tutorial_panel.gd       # Legacy tutorial panel (superseded by tutorial_display)
@@ -225,6 +241,10 @@ res://
 │
 ├── resources/
 │   ├── grass_multimesh.tres         # MultiMesh resource for grass
+│   ├── bush_pathways/
+│   │   └── bp1.tres                 # MultiMesh/Material resource for bush pathway
+│   ├── materials/
+│   │   └── bush_pathway_mesh.tres   # ArrayMesh resource for hedge/bush corridor mesh
 │   └── flowers/                     # FlowerData resources (Flyweight pattern)
 │       ├── bouquet_generator/
 │       │   └── flower_data.gd       # FlowerData Resource class (class_name FlowerData)
@@ -280,7 +300,14 @@ res://
 │   │   └── cormorant_garamond/     # TTF font files (Regular, SemiBold, Italic)
 │   └── 3D/
 │       ├── ground/
-│       │   └── ground_scene.tscn   # Terrain mesh scene
+│       │   ├── ground_scene.tscn   # Terrain mesh scene
+│       │   └── bush/                # bush.glb + texture for individual bush instances
+│       ├── bush_pathway/
+│       │   └── bpath1v2/            # Bush-pathway GLB + Tikoma/Twig textures
+│       ├── environments/
+│       │   └── night/               # night_v2.glb panoramic night environment +
+│       │                            # 13 baked image textures, nightgarden_floor.gd
+│       │                            # (subtle X-rotation wobble for floor mesh)
 │       └── flowers/                 # 3D flower models (.glb + textures) — ALL 15 present
 │           ├── girasol/             # Each folder: flor_[ID]_[name].glb + basecolor .jpg
 │           ├── dalia/
@@ -325,7 +352,7 @@ res://
 
 A single float from `0.0` (lucid) to `1.0` (complete dissolution) that drives EVERYTHING.
 Game duration: **900 seconds (15 minutes)** in production (`GAME_DURATION` constant).
-Currently set to `100.0` for testing — restore to `900.0` before release.
+Currently set to `20.0` for testing — restore to `900.0` before release.
 Every system reads this value to know how degraded things should be.
 
 The clock **pauses automatically during QTEs** by connecting to `qte_started` (pauses)
@@ -463,10 +490,11 @@ Emits `qte_completed(success: bool)` as a local signal (not via EventBus).
 
 ### GrassField — Procedural Grass System
 
-`@tool` script on a `MultiMeshInstance3D`. Procedurally scatters grass blade quads
-across a defined area. Feeds the player's world position to the shader every physics
-frame for displacement (grass bends away from the player's feet). Uses
-`shaders/grass/grass_v1.gdshader` with wind noise texture.
+`class_name GrassField` script on a `MultiMeshInstance3D` (the `@tool` annotation is
+currently commented out — generation runs only at runtime). Procedurally scatters
+grass blade quads across a defined area. Feeds the player's world position to the
+shader every physics frame for displacement (grass bends away from the player's feet).
+Uses `shaders/grass/grass_v1.gdshader` with wind noise texture.
 
 ### ConfusionSystem — Where the Game Unmakes Itself (implemented)
 
@@ -550,6 +578,62 @@ fade in/out. Five deterioration tiers with escalating severity:
 
 Requires a `ColorRect` child with `double_vision.gdshader` as material,
 assigned via `@export var shader_rect`.
+
+**Status note:** `_process()` currently early-returns on its first line, so
+desaturation and ghost bursts are NOT being applied at runtime. The tier-tracking
+logic still runs via the `deterioration_updated` callback. Remove the early
+return to re-enable the effect when integrating with the final visuals.
+
+### Garden Ambience Systems (implemented)
+
+A cluster of small visual-only systems that build the night garden atmosphere
+around the player. None of them participate in the EventBus — they are pure
+scene-level ambience driven by time/noise.
+
+**MagicDot** (`scenes/garden/magic_dot.gd`, `class_name MagicDot`, extends `Node3D`)
+A floating glowing dot that wanders organically like a butterfly. Uses simplex
+noise for smooth direction changes plus a sinusoidal vertical wobble. A soft
+return force kicks in near the boundary of a spherical zone centered on the
+parent's origin, so the dot never strays far. Builds its own emissive
+`StandardMaterial3D` (unshaded) at runtime to bypass scene-saving issues with
+the emission parameters.
+
+**MagicDotSwarm** (`scenes/garden/magic_dot_swarm.gd`, `class_name MagicDotSwarm`,
+`@tool`) Spawns `dot_count` instances of an assigned `MagicDot` `PackedScene`
+inside a spherical volume on `_ready()`. Drop one swarm per hedge cluster or
+zone corner.
+
+**oam_gpu_magicdots.tscn** (`scenes/vfx/oam_gpu_magicdots.tscn`) GPU-particles
+alternative to the CPU swarm — a `GPUParticles3D` with emissive sphere mesh,
+scale curve, and a pink-tinged emission color. Currently used in `garden.tscn`
+as the active magic-dots VFX (replaced the CPU `MagicDotSwarm`).
+
+**MagicMoon** (`scenes/garden/magic_moon.gd`, extends `DirectionalLight3D`)
+Adds a subtle two-axis oscillation to the directional light's rotation so the
+"moonlight" feels alive rather than locked. `moon_speed_x/y`, `moon_amplitude_x/y`,
+and `moon_phase_offset` control the desynced sine/cosine sway around the base
+rotation captured on `_ready()`.
+
+**NightWorldEnvironment** (`scenes/garden/night_world_environment.gd`,
+extends `WorldEnvironment`) Slowly rotates `environment.sky_rotation.y` each
+frame by `sky_rotation_speed` (default 0.02 rad/s) for a drifting starfield.
+
+**nightgarden_floor** (`assets/3D/environments/night/nightgarden_floor.gd`,
+extends `MeshInstance3D`) Adds a tiny noise-driven X-rotation wobble to the
+night-environment floor mesh so the ground subtly breathes.
+
+**HedgeCorridor** (`scenes/garden/hedge_corridor.gd`, `class_name HedgeCorridor`,
+`@tool`) Procedural hedge corridor: stamps `segment_count` copies of a base mesh
+end-to-end along the local -Z axis with mild yaw/scale/lateral jitter. Loads a
+saved external `MultiMesh` resource from
+`res://ASSETS/RESOURCES/hedge_multimesh.res` when present, otherwise generates
+and saves one (avoids serializing the transform array into every scene).
+
+**BushCorridor** (`scenes/garden/bush_corridor1.gd`, `@tool`, extends
+`MultiMeshInstance3D`) Scatters `bush_count` bushes along a corridor (length ×
+width × randomness), alternating left/right with random per-instance yaw and
+uniform scale jitter. All `@export` setters re-populate the MultiMesh on change
+so iteration in the editor is immediate.
 
 ### NarrationSystem — The Florist's Consciousness (implemented)
 

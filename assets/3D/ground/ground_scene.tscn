@@ -11,23 +11,21 @@ load_path = "res://.godot/imported/ground_Grass001_2K-JPG_Color.webp-1bb43cd5cf2
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gtkgf"]
 load_path = "res://.godot/imported/ground_Grass001_2K-JPG_Roughness.webp-7b83dc6e6dda24b7f5f578c7b51d1efc.s3tc.ctex"
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_clnio"]
-load_path = "res://.godot/imported/ground_Grass001_2K-JPG_NormalGL.webp-02d90147533492feede78939891c5c10.s3tc.ctex"
-
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_isgor"]
 load_path = "res://.godot/imported/ground_Grass001_2K-JPG_Roughness.webp-7b83dc6e6dda24b7f5f578c7b51d1efc.s3tc.ctex"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_61ba7"]
 resource_name = "ground"
 cull_mode = 2
+shading_mode = 2
+disable_fog = true
+disable_specular_occlusion = true
 albedo_texture = SubResource("CompressedTexture2D_m83x8")
 metallic_specular = 0.0
 metallic_texture = SubResource("CompressedTexture2D_gtkgf")
 metallic_texture_channel = 2
 roughness_texture = SubResource("CompressedTexture2D_isgor")
 roughness_texture_channel = 1
-normal_enabled = true
-normal_texture = SubResource("CompressedTexture2D_clnio")
 subsurf_scatter_transmittance_depth = 0.5
 uv1_scale = Vector3(10, 10, 3.334)
 
@@ -71,6 +69,6 @@ shadow_mesh = SubResource("ArrayMesh_cyhc3")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08320618, 0, 1.1983948)
 shape = SubResource("BoxShape3D_m83x8")
 
-[node name="Plane" parent="." index="1" unique_id=809990897]
+[node name="Plane" parent="." index="1" unique_id=1514635119]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -0.066325426, 0.1568439, 0.9443271)
 mesh = SubResource("ArrayMesh_xffmk")

@@ -27,6 +27,15 @@ extends CharacterBody3D
 @export var sway_rotation: float = 0.05
 @export var sway_position: float = 0.01
 
+# -- Constants ---------------------------------------------------------------
+
+## Total vertical look range, in radians. The initial camera pitch set in
+## the editor becomes the TOP of this range — the player can look down by
+## PITCH_RANGE radians from the starting view, but never above it.
+## Preserves the original 120° span (was -45° to +75°).
+const PITCH_RANGE: float = deg_to_rad(120.0)
+
+
 # -- Private variables -------------------------------------------------------
 
 var _target_velocity := Vector3.ZERO
@@ -38,6 +47,8 @@ var _target_pitch: float = 0.0
 var _current_yaw: float = 0.0
 var _current_pitch: float = 0.0
 var _rotation_velocity := Vector2.ZERO
+var _max_pitch: float = 0.0
+var _min_pitch: float = 0.0
 
 
 # -- Onready variables -------------------------------------------------------
@@ -54,6 +65,21 @@ var _rotation_velocity := Vector2.ZERO
 func _ready() -> void:
 	_noise.seed = randi()
 	_noise.frequency = 0.5
+
+	# Adopt the editor-authored orientation as the starting view.
+	# Player rotation.y → yaw; camera Camera3D.rotation.x → pitch.
+	# Without this, the script would snap rotation to (0, 0) on the
+	# first frame and discard whatever was set in the editor.
+	_current_yaw = rotation.y
+	_target_yaw = _current_yaw
+	_current_pitch = _camera.rotation.x
+	_target_pitch = _current_pitch
+
+	# The starting pitch is the upward limit; PITCH_RANGE below it is
+	# the downward limit. Set the camera looking up in the editor and
+	# the player can sweep down by PITCH_RANGE radians.
+	_max_pitch = _current_pitch
+	_min_pitch = _current_pitch - PITCH_RANGE
 
 func _process(delta: float) -> void:
 	# Block camera rotation and sway when the player can't move.
@@ -99,9 +125,7 @@ func _input(event: InputEvent) -> void:
 		)
 		_target_yaw += _rotation_velocity.x
 		_target_pitch += _rotation_velocity.y
-		_target_pitch = clamp(
-				_target_pitch, deg_to_rad(-45.0), deg_to_rad(75.0)
-		)
+		_target_pitch = clamp(_target_pitch, _min_pitch, _max_pitch)
 
 
 func _physics_process(delta: float) -> void:
