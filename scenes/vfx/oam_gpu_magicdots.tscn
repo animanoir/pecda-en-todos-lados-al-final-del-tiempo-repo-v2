@@ -16,10 +16,8 @@ metadata/_snap_enabled = true
 curve = SubResource("Curve_80xgc")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_l5e6e"]
-lifetime_randomness = 0.5
+lifetime_randomness = 0.1
 emission_shape_scale = Vector3(10, 10, 10)
-emission_shape = 1
-emission_sphere_radius = 1.0
 initial_velocity_max = 2.0
 angular_velocity_min = 29.999983
 angular_velocity_max = 59.99998
@@ -46,5 +44,7 @@ amount = 15
 lifetime = 2.5999999999999996
 preprocess = 0.65
 randomness = 1.0
+fixed_fps = 60
+collision_base_size = 0.0
 process_material = SubResource("ParticleProcessMaterial_l5e6e")
 draw_pass_1 = SubResource("SphereMesh_qei1p")

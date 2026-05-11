@@ -46,6 +46,7 @@
 [ext_resource type="Resource" uid="uid://ch6g7jh861tri" path="res://resources/flowers/flower_data_orquidea.tres" id="34_kcr6t"]
 [ext_resource type="Resource" uid="uid://bi8yepturnymh" path="res://resources/flowers/flower_data_peonia.tres" id="36_gwhxi"]
 [ext_resource type="Resource" uid="uid://orbueh25s0wp" path="res://resources/flowers/flower_data_tulipan.tres" id="38_g0ryp"]
+[ext_resource type="Script" uid="uid://dy5q33frs2ke0" path="res://scenes/garden/gpu_particles_3d.gd" id="48_ksn1a"]
 [ext_resource type="ArrayMesh" uid="uid://bbq8fn1fnwgxf" path="res://resources/materials/bush_pathway_mesh.tres" id="50_ifglt"]
 [ext_resource type="PackedScene" uid="uid://c6g4us3ekyl6e" path="res://scenes/vfx/oam_gpu_magicdots.tscn" id="50_ksn1a"]
 [ext_resource type="Script" uid="uid://dntix6qrtommo" path="res://scenes/garden/bush_corridor1.gd" id="51_ifglt"]
@@ -58,6 +59,31 @@ shader_parameter/ghost_speed = 3.0
 shader_parameter/ghost_frequency = 40.0
 shader_parameter/ghost_amplitude = 0.005
 shader_parameter/ghost_spread = 0.08
+
+[sub_resource type="Gradient" id="Gradient_63max"]
+colors = PackedColorArray(0.08627451, 0.09411765, 0.18039216, 1, 0.14509805, 0.16078432, 0.27058825, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ksqo1"]
+gradient = SubResource("Gradient_63max")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_63max"]
+seed = 10
+frequency = 0.0055
+fractal_weighted_strength = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ksqo1"]
+noise = SubResource("FastNoiseLite_63max")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ksqo1"]
+shader = ExtResource("3_63max")
+shader_parameter/noise_tex = SubResource("NoiseTexture2D_ksqo1")
+shader_parameter/noise_scale = 0.03759999904872
+shader_parameter/flatness = 0.0
+shader_parameter/density = 1.23349996879245
+shader_parameter/grad_tex = SubResource("GradientTexture1D_ksqo1")
+shader_parameter/emision = Color(0, 0, 0, 1)
+shader_parameter/fog_speed = 0.10000024225000016
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_63max"]
 panorama = ExtResource("2_yq3ca")
@@ -88,7 +114,6 @@ glow_levels/7 = 0.1
 glow_intensity = 0.8
 glow_bloom = 0.1
 glow_blend_mode = 0
-fog_enabled = true
 fog_light_color = Color(0.039215688, 0.039215688, 0.101960786, 1)
 fog_density = 0.015
 fog_sky_affect = 0.5
@@ -96,31 +121,6 @@ fog_height_density = -5.0
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.0
 volumetric_fog_ambient_inject = 1.54
-
-[sub_resource type="Gradient" id="Gradient_63max"]
-colors = PackedColorArray(0.08627451, 0.09411765, 0.18039216, 1, 0.14509805, 0.16078432, 0.27058825, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_ksqo1"]
-gradient = SubResource("Gradient_63max")
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_63max"]
-seed = 10
-frequency = 0.0055
-fractal_weighted_strength = 1.0
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ksqo1"]
-noise = SubResource("FastNoiseLite_63max")
-seamless = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ksqo1"]
-shader = ExtResource("3_63max")
-shader_parameter/noise_tex = SubResource("NoiseTexture2D_ksqo1")
-shader_parameter/noise_scale = 0.03759999904872
-shader_parameter/flatness = 0.0
-shader_parameter/density = 1.23349996879245
-shader_parameter/grad_tex = SubResource("GradientTexture1D_ksqo1")
-shader_parameter/emision = Color(0, 0, 0, 1)
-shader_parameter/fog_speed = 0.10000024225000016
 
 [sub_resource type="MultiMesh" id="MultiMesh_7e4ym"]
 transform_format = 1
@@ -158,9 +158,14 @@ mouse_filter = 2
 
 [node name="TutorialDisplay" parent="." unique_id=1034673139 instance=ExtResource("2_hd7uq")]
 
-[node name="WorldEnvironmentFolder" type="Node" parent="." unique_id=268324298]
+[node name="WorldEnvironment" type="Node" parent="." unique_id=268324298]
 
-[node name="MagicMoon" type="DirectionalLight3D" parent="WorldEnvironmentFolder" unique_id=860151408]
+[node name="FogVolume" type="FogVolume" parent="WorldEnvironment" unique_id=25192842]
+transform = Transform3D(2.57, 0, 0, 0, 2.57, 0, 0, 0, 2.57, -0.61879206, 2.4950206, 13.4218855)
+size = Vector3(1.8086853, 2.0583496, 11.044556)
+material = SubResource("ShaderMaterial_ksqo1")
+
+[node name="MagicMoon" type="DirectionalLight3D" parent="WorldEnvironment" unique_id=860151408]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 14.041653, 0)
 light_energy = 0.5
 shadow_enabled = true
@@ -173,15 +178,10 @@ moon_speed_y = 0.04
 moon_amplitude_x = 30.0
 moon_amplitude_y = 25.0
 
-[node name="NightWorldEnvironment" type="WorldEnvironment" parent="WorldEnvironmentFolder" unique_id=730548138]
+[node name="NightWorldEnvironment" type="WorldEnvironment" parent="WorldEnvironment" unique_id=730548138]
 environment = SubResource("Environment_ds068")
 script = ExtResource("6_ifglt")
 sky_rotation_speed = 0.01
-
-[node name="FogVolume" type="FogVolume" parent="." unique_id=25192842]
-transform = Transform3D(2.57, 0, 0, 0, 2.57, 0, 0, 0, 2.57, -0.61879206, 2.4950206, 13.4218855)
-size = Vector3(1.8086853, 2.0583496, 11.044556)
-material = SubResource("ShaderMaterial_ksqo1")
 
 [node name="CharacterBody3D" parent="." unique_id=684826114 instance=ExtResource("3_ehujy")]
 transform = Transform3D(-0.9997712, 0, -0.021396106, 0.018861402, 0.47212005, -0.88133264, 0.010101531, -0.8815342, -0.472012, 0.0029420853, 0.19467598, 0.46910405)
@@ -319,8 +319,8 @@ script = ExtResource("13_yktlr")
 
 [node name="AmbientPhaseSystem" type="Node" parent="." unique_id=2119257661 node_paths=PackedStringArray("world_environment", "directional_light")]
 script = ExtResource("14_ojjr1")
-world_environment = NodePath("../WorldEnvironmentFolder/NightWorldEnvironment")
-directional_light = NodePath("../WorldEnvironmentFolder/MagicMoon")
+world_environment = NodePath("../WorldEnvironment/NightWorldEnvironment")
+directional_light = NodePath("../WorldEnvironment/MagicMoon")
 transition_duration = 2.0
 
 [node name="NarrationSystem" type="Node" parent="." unique_id=381689036 node_paths=PackedStringArray("narration_player")]
@@ -365,6 +365,11 @@ layout_mode = 2
 [node name="MagicDotsParticles" parent="MagicDots" unique_id=930777605 instance=ExtResource("50_ksn1a")]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.14609396, 0.40556288, 2.0146277)
 
+[node name="GPUParticles3D" parent="MagicDots/MagicDotsParticles" index="0" unique_id=348813756]
+lifetime = 3.38
+speed_scale = 0.0
+script = ExtResource("48_ksn1a")
+
 [node name="MagicDotsParticles2" parent="MagicDots" unique_id=1763524643 instance=ExtResource("50_ksn1a")]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.27888083, 1.7093313, 0.701067)
 
@@ -401,3 +406,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9864956, 0, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Collisions/Wall3" unique_id=1716685282]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 13.754425)
 shape = SubResource("BoxShape3D_7e4ym")
+
+[editable path="MagicDots/MagicDotsParticles"]
