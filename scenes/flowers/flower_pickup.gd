@@ -1,3 +1,4 @@
+@tool
 class_name FlowerPickup
 extends StaticBody3D
 ## A simple interactable flower placeholder.
@@ -10,8 +11,8 @@ extends StaticBody3D
 ## and shrinks away. The sound survives the node being freed
 ## by reparenting to the scene root before queue_free.
 
-@export var flower_name: String = "Rosa"
-@export var flower_id:int = 7
+@export var flower_name: String = "Magnolia"
+@export var flower_id:int = 6
 @export var flower_model_scene:PackedScene
 @export var flower_data:FlowerData = null
 

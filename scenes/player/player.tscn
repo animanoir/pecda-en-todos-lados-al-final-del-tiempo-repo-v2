@@ -30,7 +30,7 @@ fov = 45.0
 far = 50.0
 
 [node name="InteractionRay" type="RayCast3D" parent="CameraHead/Camera3D" unique_id=863873969]
-target_position = Vector3(0, 0, -3)
+target_position = Vector3(0, 0, -2)
 
 [node name="CrosshairUI" type="CanvasLayer" parent="." unique_id=2025504051]
 

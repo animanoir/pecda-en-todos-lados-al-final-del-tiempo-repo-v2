@@ -27,13 +27,16 @@ extends CharacterBody3D
 @export var sway_rotation: float = 0.05
 @export var sway_position: float = 0.01
 
-# -- Constants ---------------------------------------------------------------
+@export_group("Look Range")
+## Initial vertical aim, in degrees. Positive looks up at the sky,
+## negative looks down at the ground. This value is ALSO the upper
+## bound of the look range — the player can only look down from here.
+@export var initial_pitch_degrees: float = 60.0
 
-## Total vertical look range, in radians. The initial camera pitch set in
-## the editor becomes the TOP of this range — the player can look down by
-## PITCH_RANGE radians from the starting view, but never above it.
-## Preserves the original 120° span (was -45° to +75°).
-const PITCH_RANGE: float = deg_to_rad(120.0)
+## Total vertical sweep, in degrees. The player can look down by
+## this many degrees from `initial_pitch_degrees`. Default 120° matches
+## the original (-45° → +75°) range.
+@export var pitch_range_degrees: float = 120.0
 
 
 # -- Private variables -------------------------------------------------------
@@ -66,20 +69,22 @@ func _ready() -> void:
 	_noise.seed = randi()
 	_noise.frequency = 0.5
 
-	# Adopt the editor-authored orientation as the starting view.
-	# Player rotation.y → yaw; camera Camera3D.rotation.x → pitch.
-	# Without this, the script would snap rotation to (0, 0) on the
-	# first frame and discard whatever was set in the editor.
+	# Yaw inherits from the player's editor rotation (so you can face
+	# the player in any direction in the scene). Pitch is driven by
+	# initial_pitch_degrees so the starting view is explicit and
+	# configurable from the Inspector.
 	_current_yaw = rotation.y
 	_target_yaw = _current_yaw
-	_current_pitch = _camera.rotation.x
-	_target_pitch = _current_pitch
 
-	# The starting pitch is the upward limit; PITCH_RANGE below it is
-	# the downward limit. Set the camera looking up in the editor and
-	# the player can sweep down by PITCH_RANGE radians.
-	_max_pitch = _current_pitch
-	_min_pitch = _current_pitch - PITCH_RANGE
+	var initial_pitch: float = deg_to_rad(initial_pitch_degrees)
+	_current_pitch = initial_pitch
+	_target_pitch = initial_pitch
+
+	# The starting pitch is the upper bound; pitch_range_degrees below
+	# it is the lower bound. Looking up at the sky and the player can
+	# only sweep down from there.
+	_max_pitch = initial_pitch
+	_min_pitch = initial_pitch - deg_to_rad(pitch_range_degrees)
 
 func _process(delta: float) -> void:
 	# Block camera rotation and sway when the player can't move.
