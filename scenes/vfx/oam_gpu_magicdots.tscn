@@ -29,7 +29,8 @@ color_ramp = SubResource("GradientTexture1D_qei1p")
 albedo_color = Color(18.892002, 7.37469, 11.824047, 1)
 metallic_specular = 0.0
 emission_enabled = true
-emission = Color(1, 1, 1, 1)
+emission = Color(0.9999998, 0.27477872, 0.9945113, 1)
+emission_energy_multiplier = 14.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_qei1p"]
 material = SubResource("StandardMaterial3D_6f2s8")
