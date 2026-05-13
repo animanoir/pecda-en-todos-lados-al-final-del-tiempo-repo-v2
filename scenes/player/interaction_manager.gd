@@ -78,6 +78,7 @@ func _clear_target() -> void:
 
 func _start_qte() -> void:
 	_is_qte_active = true
+	GameStates.is_qte_active = true
 	_crosshair_label.visible = false
 	_qte_display.start_qte()
 
@@ -90,6 +91,7 @@ func _cancel_qte() -> void:
 
 func _end_qte_mode() -> void:
 	_is_qte_active = false
+	GameStates.is_qte_active = false
 	_crosshair_label.visible = true
 	_current_target = null
 

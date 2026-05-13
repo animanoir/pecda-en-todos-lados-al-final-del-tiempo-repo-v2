@@ -110,6 +110,12 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	if not event is InputEventKey:
 		return
 
+	# Suppress the toggle while a QTE is running. The QTE pool
+	# includes I, and we don't want pressing I as part of the
+	# sequence to also open the inventory.
+	if GameStates.is_qte_active:
+		return
+
 	var key_event := event as InputEventKey
 
 	if key_event.keycode == KEY_I and key_event.pressed and not key_event.echo:

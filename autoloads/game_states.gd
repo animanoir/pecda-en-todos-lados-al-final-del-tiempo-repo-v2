@@ -58,6 +58,13 @@ var player_speed_multiplier: float = 1.0
 ## opening cinematic, final sequence.
 var can_player_move: bool = true
 
+## Whether a QTE (flower-collection minigame) is currently running.
+## Written by the InteractionManager when a QTE starts/ends.
+## UI panels that listen for keys also bound to QTE letters
+## (e.g., the tutorial/inventory panel on I) read this to
+## suppress their toggles while the player is solving the QTE.
+var is_qte_active: bool = false
+
 
 # ---------------------------------------------------------------
 # Public methods
@@ -88,3 +95,4 @@ func reset() -> void:
 	phases_visited.clear()
 	player_speed_multiplier = 1.0
 	can_player_move = false
+	is_qte_active = false
