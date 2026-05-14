@@ -18,6 +18,7 @@
 [ext_resource type="Script" uid="uid://b48i76egpuqex" path="res://scenes/ui/bouqet_screen.gd" id="21_blbrx"]
 [ext_resource type="AudioStream" uid="uid://dck5mna1dupbe" path="res://assets/audio/music/music-night0.ogg" id="22_le0xf"]
 [ext_resource type="PackedScene" uid="uid://dgoj5l7yio2w1" path="res://assets/3D/flowers/magnolia/flor_06_magnolia.glb" id="22_njhb3"]
+[ext_resource type="AudioStream" uid="uid://cgdqt6dcls4oh" path="res://assets/audio/sfx/environment/sfx-forest-night.ogg" id="23_jip31"]
 [ext_resource type="Resource" uid="uid://bw4btlay5ln3d" path="res://resources/flowers/flower_data_magnolia.tres" id="32_vnb1g"]
 [ext_resource type="ArrayMesh" uid="uid://bbq8fn1fnwgxf" path="res://resources/materials/bush_pathway_mesh.tres" id="50_ifglt"]
 [ext_resource type="PackedScene" uid="uid://c6g4us3ekyl6e" path="res://scenes/vfx/oam_gpu_magicdots.tscn" id="50_ksn1a"]
@@ -122,6 +123,14 @@ disable_receive_shadows = true
 [sub_resource type="BoxMesh" id="BoxMesh_jip31"]
 material = SubResource("StandardMaterial3D_le0xf")
 
+[sub_resource type="Animation" id="Animation_le0xf"]
+resource_name = "fadein"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jip31"]
+_data = {
+&"fadein": SubResource("Animation_le0xf")
+}
+
 [node name="Garden" type="Node3D" unique_id=1238650163]
 script = ExtResource("1_34oyu")
 
@@ -162,7 +171,7 @@ sky_rotation_speed = 0.01
 
 [node name="CharacterBody3D" parent="." unique_id=684826114 instance=ExtResource("3_ehujy")]
 transform = Transform3D(-1.0000001, 0, 8.742278e-08, 0, 0.9999999, 0, -8.7422784e-08, 0, -1, -0.11611718, 1, 2.0925548)
-player_speed = 3.0
+player_speed = 0.6
 sway_speed = 0.12
 sway_rotation = 0.06
 sway_position = 0.02
@@ -297,10 +306,22 @@ mesh = SubResource("BoxMesh_jip31")
 
 [node name="Music" type="Node" parent="." unique_id=986993158]
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Music" unique_id=765532691]
+[node name="Night0Music" type="AudioStreamPlayer" parent="Music" unique_id=765532691]
 stream = ExtResource("22_le0xf")
+volume_db = -12.0
 autoplay = true
 parameters/looping = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Music/Night0Music" unique_id=189342219]
+root_node = NodePath("../../..")
+libraries/ = SubResource("AnimationLibrary_jip31")
+
+[node name="SFX" type="Node" parent="." unique_id=399326547]
+
+[node name="ForestNight" type="AudioStreamPlayer" parent="SFX" unique_id=650834509]
+stream = ExtResource("23_jip31")
+volume_db = -8.0
+autoplay = true
 
 [editable path="CharacterBody3D"]
 [editable path="Flowers/FloatingFlower/FlorMagnolia"]

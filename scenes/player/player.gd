@@ -38,6 +38,20 @@ extends CharacterBody3D
 ## the original (-45° → +75°) range.
 @export var pitch_range_degrees: float = 120.0
 
+@export_group("Walking Audio")
+## Per-phase walking streams. Keys are StringName phase IDs
+## (&"NIGHT", &"DAWN", &"MIDDAY", &"SUNSET", &"TWILIGHT",
+## &"EMPTY_NIGHT", &"SKY"). Phases without an entry fall back to
+## default_walking_stream. If that is also null, the stream
+## currently assigned to the Walking node is kept.
+@export var walking_streams: Dictionary = {}
+@export var default_walking_stream: AudioStream
+## Target loudness once fully faded in.
+@export var walking_volume_db: float = -15.0
+@export var walking_fade_duration: float = 0.25
+## Minimum XZ speed (m/s) for the loop to count as "walking".
+@export var walking_speed_threshold: float = 0.1
+
 
 # -- Private variables -------------------------------------------------------
 
@@ -52,6 +66,8 @@ var _current_pitch: float = 0.0
 var _rotation_velocity := Vector2.ZERO
 var _max_pitch: float = 0.0
 var _min_pitch: float = 0.0
+var _is_walking_audio_playing: bool = false
+var _walking_tween: Tween
 
 
 # -- Onready variables -------------------------------------------------------
@@ -62,6 +78,7 @@ var _min_pitch: float = 0.0
 @onready var _camera: Camera3D = $CameraHead/Camera3D
 @onready var _camera_box: Node3D = $CameraHead
 @onready var _camera_box_base_pos: Vector3 = _camera_box.position
+@onready var _walking_player: AudioStreamPlayer = $Walking
 
 # -- Virtual callbacks -------------------------------------------------------
 
@@ -85,6 +102,11 @@ func _ready() -> void:
 	# only sweep down from there.
 	_max_pitch = initial_pitch
 	_min_pitch = initial_pitch - deg_to_rad(pitch_range_degrees)
+
+	_walking_player.bus = &"SFX"
+	_walking_player.volume_db = -80.0
+	GameEventBus.phase_changed.connect(_on_phase_changed)
+	_apply_phase_stream(GameStates.current_phase)
 
 func _process(delta: float) -> void:
 	# Block camera rotation and sway when the player can't move.
@@ -146,9 +168,11 @@ func _physics_process(delta: float) -> void:
 		velocity.x = 0.0
 		velocity.z = 0.0
 		move_and_slide()
+		_update_walking_audio()
 		return
 
 	_process_movement(delta)
+	_update_walking_audio()
 
 
 # -- Private methods ---------------------------------------------------------
@@ -193,3 +217,77 @@ func _process_movement(delta: float) -> void:
 	velocity.z = _current_velocity.z
 
 	move_and_slide()
+
+
+func _update_walking_audio() -> void:
+	var horizontal_speed := Vector2(velocity.x, velocity.z).length()
+	var is_moving: bool = (
+			horizontal_speed > walking_speed_threshold
+			and GameStates.can_player_move
+	)
+	if is_moving and not _is_walking_audio_playing:
+		_start_walking_audio()
+	elif not is_moving and _is_walking_audio_playing:
+		_stop_walking_audio()
+
+
+func _start_walking_audio() -> void:
+	_is_walking_audio_playing = true
+	var stream := _walking_player.stream
+	if stream == null:
+		return
+	_walking_player.play(randf() * stream.get_length())
+	_tween_walking_volume(walking_volume_db, false)
+
+
+func _stop_walking_audio() -> void:
+	_is_walking_audio_playing = false
+	_tween_walking_volume(-80.0, true)
+
+
+func _tween_walking_volume(target_db: float, stop_after: bool) -> void:
+	if _walking_tween and _walking_tween.is_valid():
+		_walking_tween.kill()
+	_walking_tween = create_tween()
+	_walking_tween.tween_property(
+			_walking_player, "volume_db", target_db, walking_fade_duration
+	)
+	if stop_after:
+		_walking_tween.tween_callback(_walking_player.stop)
+
+
+func _apply_phase_stream(phase: StringName) -> void:
+	var new_stream: AudioStream = walking_streams.get(
+			phase, default_walking_stream
+	)
+	if new_stream == null or new_stream == _walking_player.stream:
+		return
+
+	if not _is_walking_audio_playing:
+		_walking_player.stream = new_stream
+		return
+
+	# Cross-fade: fade out → swap → restart at random offset → fade in.
+	if _walking_tween and _walking_tween.is_valid():
+		_walking_tween.kill()
+	_walking_tween = create_tween()
+	_walking_tween.tween_property(
+			_walking_player, "volume_db", -80.0, walking_fade_duration
+	)
+	_walking_tween.tween_callback(
+			func() -> void:
+				_walking_player.stream = new_stream
+				_walking_player.play(randf() * new_stream.get_length())
+	)
+	_walking_tween.tween_property(
+			_walking_player,
+			"volume_db",
+			walking_volume_db,
+			walking_fade_duration,
+	)
+
+
+# -- Signal callbacks --------------------------------------------------------
+
+func _on_phase_changed(new_phase: StringName) -> void:
+	_apply_phase_stream(new_phase)
