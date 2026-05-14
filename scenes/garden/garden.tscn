@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://d23swsqwcp0es" path="res://scripts/systems/ambient_phase_system.gd" id="14_ojjr1"]
 [ext_resource type="Script" uid="uid://cm56u8wwecijj" path="res://scripts/systems/narration_system.gd" id="17_h2d2l"]
 [ext_resource type="Script" uid="uid://b48i76egpuqex" path="res://scenes/ui/bouqet_screen.gd" id="21_blbrx"]
+[ext_resource type="AudioStream" uid="uid://dck5mna1dupbe" path="res://assets/audio/music/music-night0.ogg" id="22_le0xf"]
 [ext_resource type="PackedScene" uid="uid://dgoj5l7yio2w1" path="res://assets/3D/flowers/magnolia/flor_06_magnolia.glb" id="22_njhb3"]
 [ext_resource type="Resource" uid="uid://bw4btlay5ln3d" path="res://resources/flowers/flower_data_magnolia.tres" id="32_vnb1g"]
 [ext_resource type="ArrayMesh" uid="uid://bbq8fn1fnwgxf" path="res://resources/materials/bush_pathway_mesh.tres" id="50_ifglt"]
@@ -293,6 +294,13 @@ shape = SubResource("BoxShape3D_7e4ym")
 [node name="DarknessCube" type="MeshInstance3D" parent="." unique_id=805772641]
 transform = Transform3D(14.83, 0, 0, 0, 8.31, 0, 0, 0, 31.92, 0, 3.5159824, 14.05179)
 mesh = SubResource("BoxMesh_jip31")
+
+[node name="Music" type="Node" parent="." unique_id=986993158]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Music" unique_id=765532691]
+stream = ExtResource("22_le0xf")
+autoplay = true
+parameters/looping = true
 
 [editable path="CharacterBody3D"]
 [editable path="Flowers/FloatingFlower/FlorMagnolia"]
