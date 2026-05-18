@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://cio7nnv3k4f1l" path="res://scenes/ui/qtedisplay/qte_display.tscn" id="2_nuvst"]
 [ext_resource type="Script" uid="uid://dntimmyvhuucd" path="res://scenes/player/input_manager.gd" id="5_p47bc"]
 [ext_resource type="AudioStream" uid="uid://dwh74lbsm5nx1" path="res://assets/audio/sfx/walking/walking-forest.wav" id="6_75vfm"]
+[ext_resource type="AudioStream" uid="uid://ceew2womu1u3p" path="res://assets/audio/narration/sequential/voz-fase1-1.ogg" id="7_qek5x"]
+[ext_resource type="Script" uid="uid://c10nsmph22rnd" path="res://scenes/player/voice.gd" id="8_5gtgg"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_01rsk"]
 radius = 0.25
@@ -69,3 +71,8 @@ script = ExtResource("5_p47bc")
 [node name="Walking" type="AudioStreamPlayer" parent="." unique_id=868218390]
 stream = ExtResource("6_75vfm")
 volume_db = -15.0
+
+[node name="Voice" type="AudioStreamPlayer" parent="." unique_id=1830442996]
+stream = ExtResource("7_qek5x")
+autoplay = true
+script = ExtResource("8_5gtgg")
